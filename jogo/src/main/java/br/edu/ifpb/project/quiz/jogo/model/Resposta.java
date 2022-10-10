@@ -1,11 +1,10 @@
 package br.edu.ifpb.project.quiz.jogo.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +18,13 @@ public class Resposta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private String value;
+    private String descricao;
 
     private String tema;
 
-    private List<Pergunta> perguntas;
+    @OneToOne
+    private Pergunta pergunta;
 
 }
