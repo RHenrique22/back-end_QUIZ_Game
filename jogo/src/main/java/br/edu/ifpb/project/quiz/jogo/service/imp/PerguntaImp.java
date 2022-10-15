@@ -17,7 +17,13 @@ public class PerguntaImp implements PerguntaService {
 
     @Override
     public Pergunta createPergunta(Pergunta pergunta) {
-        return null;
+        return this.perguntaRepository.save(
+            Pergunta.builder()
+               .descricao(pergunta.getDescricao())
+               .tema(pergunta.getTema())
+               .resposta(pergunta.getResposta())
+               .build()
+        );
     }
 
     @Override

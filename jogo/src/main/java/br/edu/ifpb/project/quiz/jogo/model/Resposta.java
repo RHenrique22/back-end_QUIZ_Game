@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Resposta {
 
     @Id
@@ -23,8 +25,5 @@ public class Resposta {
     private String descricao;
 
     private String tema;
-
-    @OneToOne
-    private Pergunta pergunta;
 
 }
