@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.project.quiz.jogo.model.Pergunta;
 import br.edu.ifpb.project.quiz.jogo.model.Resposta;
@@ -16,6 +17,7 @@ import br.edu.ifpb.project.quiz.jogo.repository.PerguntaRepository;
 import br.edu.ifpb.project.quiz.jogo.repository.RespostaRepository;
 import br.edu.ifpb.project.quiz.jogo.service.RespostaService;
 
+@Service
 public class RespostaImp implements RespostaService {
 
     @Autowired
@@ -35,16 +37,16 @@ public class RespostaImp implements RespostaService {
     }
 
     @Override
-    public List<Resposta> randomResposta(String tema, Long idPergunta) {
-        Optional<Pergunta> pergunta = this.perguntaRepository.findById(idPergunta);
+    public List<Resposta> randomResposta(String tema, Pergunta pergunta) {
+        Optional<Pergunta> perguntaOpt = this.perguntaRepository.findById(pergunta.getId());
         List<Resposta> respostas = this.respostaRepository.findByTema(tema);
         Set<Resposta> respostasRandom = new HashSet<>();
         Random random = new Random();
 
         if(!respostas.isEmpty() && respostas.size() >= 4) {
 
-            if(pergunta.isPresent()) {
-                respostasRandom.add(pergunta.get().getResposta());
+            if(perguntaOpt.isPresent()) {
+                respostasRandom.add(perguntaOpt.get().getResposta());
             }
             else {
                 return null;

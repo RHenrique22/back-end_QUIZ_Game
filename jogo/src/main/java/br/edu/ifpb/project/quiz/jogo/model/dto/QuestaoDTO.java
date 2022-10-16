@@ -1,5 +1,9 @@
 package br.edu.ifpb.project.quiz.jogo.model.dto;
 
+import java.util.List;
+
+import br.edu.ifpb.project.quiz.jogo.model.Pergunta;
+import br.edu.ifpb.project.quiz.jogo.model.Resposta;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestaoDTO {
-    private Long idPergunta;
-    private String descricaoPergunta;
-    private String temaPergunta;
-    private Long idResposta;
-    private String descricaoResposta;
-    private String temaResposta;
+    private Pergunta pergunta;
+    private List<Resposta> respostas;
 }

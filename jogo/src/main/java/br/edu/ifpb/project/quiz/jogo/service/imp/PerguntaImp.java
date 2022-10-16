@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.project.quiz.jogo.model.Pergunta;
 import br.edu.ifpb.project.quiz.jogo.model.Resposta;
 import br.edu.ifpb.project.quiz.jogo.repository.PerguntaRepository;
 import br.edu.ifpb.project.quiz.jogo.service.PerguntaService;
 
+@Service
 public class PerguntaImp implements PerguntaService {
 
     @Autowired
@@ -41,6 +43,11 @@ public class PerguntaImp implements PerguntaService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<Pergunta> getPerguntas() {
+        return this.perguntaRepository.findAll();
     }
     
 }

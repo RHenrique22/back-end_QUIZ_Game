@@ -30,7 +30,7 @@ public class RabbitMq {
     public void createQueueUser(String username) {
         try(
             Connection connection = this.factory.newConnection();
-            Channel channel       = connection.createChannel();
+            Channel    channel    = connection.createChannel();
         ) {
             channel.queueDeclare(NAME_QUEUE + username, false, true, true, null);
         }
