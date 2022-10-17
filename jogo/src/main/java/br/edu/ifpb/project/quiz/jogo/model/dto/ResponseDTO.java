@@ -1,5 +1,7 @@
 package br.edu.ifpb.project.quiz.jogo.model.dto;
 
+import br.edu.ifpb.project.quiz.jogo.model.Pergunta;
+import br.edu.ifpb.project.quiz.jogo.model.Resposta;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseDTO {
-    private Long idPergunta;
-    private Long idResposta;
+    private Pergunta pergunta;
+    private Resposta resposta;
 }
