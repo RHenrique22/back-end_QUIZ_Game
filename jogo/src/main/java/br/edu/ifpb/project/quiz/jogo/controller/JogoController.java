@@ -28,7 +28,7 @@ public class JogoController {
 
     @PostMapping(value = "/respostaUser")
     public Boolean verificarRespostaUser(@RequestBody ResponseDTO response) {
-        return response.getPergunta().getResposta().equals(response.getResposta());
+        return this.perguntaService.resultPergunta(response.getPergunta(), response.getResposta());
     }
 
     @GetMapping(value = "/perguntas")
@@ -38,8 +38,8 @@ public class JogoController {
 
     @GetMapping(value = "/questao")
     public QuestaoDTO questao() {
-        Pergunta pergunta = this.perguntaService.randomPergunta("O QUE É, O QUE É");
-        List<Resposta> respostas = this.respostaService.randomResposta("O QUE É, O QUE É", pergunta);
+        Pergunta pergunta = this.perguntaService.randomPergunta("O QUE E, O QUE E");
+        List<Resposta> respostas = this.respostaService.randomResposta("O QUE E, O QUE E", pergunta);
 
         return new QuestaoDTO(pergunta, respostas);
     }

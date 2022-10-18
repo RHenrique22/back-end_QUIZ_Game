@@ -34,25 +34,6 @@ services:
       - postgres
     restart: unless-stopped
 
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ifpb@ifpb.edu.br
-      PGADMIN_DEFAULT_PASSWORD: ifpb
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    links:
-      - postgres
-    networks:
-      - postgres
-    depends_on:
-      - postgres
-    restart: unless-stopped
-
 networks:
   postgres:
 
@@ -60,4 +41,3 @@ volumes:
   postgres-data:
   rabbitmq-data:
   rabbitmq-data-setup:
-  pgadmin-data:
