@@ -15,7 +15,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 import com.rabbitmq.client.MessageProperties;
 
-import br.edu.ifpb.project.quiz.jogo.model.dto.ResponseDTO;
+import br.edu.ifpb.project.quiz.jogo.model.dto.RequestDTO;
 
 public class RabbitMQ {
 
@@ -26,8 +26,8 @@ public class RabbitMQ {
 
     public RabbitMQ() {
         this.argsConnection.put("HOST", "localhost");
-        this.argsConnection.put("USERNAME", "mqadmin");
-        this.argsConnection.put("PASSWORD", "Admin123XX_");
+        this.argsConnection.put("USERNAME", "ifpb");
+        this.argsConnection.put("PASSWORD", "ifpb");
 
         this.factory.setHost(this.argsConnection.get("HOST"));
         this.factory.setUsername(this.argsConnection.get("USERNAME"));
@@ -35,16 +35,14 @@ public class RabbitMQ {
         
     }
 
-    public void publishInQueue(String username, Boolean resposta) {
+    public void publishInQueue(String username, String resposta) {
         try (
             Connection connection    = this.factory.newConnection();
             Channel    channel       = connection.createChannel();
         ) {
 
-            byte[] serializable = SerializationUtils.serialize(resposta);
-
-            channel.queueDeclare(this.PRODUCER + username, true, true, true, null);
-            channel.basicPublish("", this.PRODUCER + username, MessageProperties.PERSISTENT_TEXT_PLAIN, serializable);
+            channel.queueDeclare(this.PRODUCER + username, true, false, false, null);
+            channel.basicPublish("", this.PRODUCER + username, MessageProperties.PERSISTENT_TEXT_PLAIN, resposta.getBytes());
 
         } catch(IOException | TimeoutException e) {
             e.printStackTrace();
@@ -52,18 +50,19 @@ public class RabbitMQ {
             
     }
 
-    public ResponseDTO consumerInQueue() {
+    public RequestDTO consumerInQueue() {
+        List<RequestDTO> result = new ArrayList<>();
+
         try(
             Connection connection    = this.factory.newConnection();
             Channel    channel       = connection.createChannel();
         ) {
             
-            channel.queueDeclare(this.CONSUMER, true, true, true, null);
-            List<ResponseDTO> result = new ArrayList<>();
+            channel.queueDeclare(this.CONSUMER, true, false, false, null);
 
             do {
                 DeliverCallback callback = (consumerTag, deliver) -> {
-                    result.add((ResponseDTO) SerializationUtils.deserialize(deliver.getBody()));
+                    result.add((RequestDTO) SerializationUtils.deserialize(deliver.getBody()));
                     channel.basicAck(deliver.getEnvelope().getDeliveryTag(), false);
                 };
 
@@ -79,7 +78,7 @@ public class RabbitMQ {
             e.printStackTrace();
         }
 
-        return null;
+        return result.get(0);
     }
 
 }
