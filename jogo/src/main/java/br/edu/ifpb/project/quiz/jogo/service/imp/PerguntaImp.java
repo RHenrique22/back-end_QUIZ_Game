@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.project.quiz.jogo.model.Pergunta;
 import br.edu.ifpb.project.quiz.jogo.model.Resposta;
-import br.edu.ifpb.project.quiz.jogo.model.dto.ResponseDTO;
 import br.edu.ifpb.project.quiz.jogo.repository.PerguntaRepository;
 import br.edu.ifpb.project.quiz.jogo.service.PerguntaService;
 
@@ -31,8 +30,8 @@ public class PerguntaImp implements PerguntaService {
     }
 
     @Override
-    public ResponseDTO resultPergunta(Pergunta pergunta, Resposta resposta) {
-        return pergunta.getResposta().equals(resposta) ? new ResponseDTO("ACERTOU") :  new ResponseDTO("ERROU");
+    public Boolean resultPergunta(Pergunta pergunta, Resposta resposta) {
+        return pergunta.getResposta().equals(resposta);
     }
 
     @Override

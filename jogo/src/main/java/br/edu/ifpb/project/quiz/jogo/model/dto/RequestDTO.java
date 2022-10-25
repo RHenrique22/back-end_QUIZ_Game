@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class RequestDTO implements Serializable {
     private Pergunta pergunta;
     private Resposta resposta;
-    private String   username;
+    private String   email;
 }
