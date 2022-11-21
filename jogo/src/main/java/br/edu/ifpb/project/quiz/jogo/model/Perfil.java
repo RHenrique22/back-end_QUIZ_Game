@@ -2,10 +2,12 @@ package br.edu.ifpb.project.quiz.jogo.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+/* import javax.persistence.Lob; */
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,13 +19,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Registro implements Serializable {
+public class Perfil implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long   id;
 
+    private String apelido;
+
+    private String bio;
+
+    @Column(unique = true)
     private String email;
-    
-    private Boolean resultado;
 
+    /* @Lob
+    private byte[] avatar; */
+    
 }

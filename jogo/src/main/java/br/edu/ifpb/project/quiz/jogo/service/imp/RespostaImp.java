@@ -39,11 +39,11 @@ public class RespostaImp implements RespostaService {
     @Override
     public List<Resposta> randomResposta(String tema, Pergunta pergunta) {
         Optional<Pergunta> perguntaOpt = this.perguntaRepository.findById(pergunta.getId());
-        List<Resposta> respostas = this.respostaRepository.findByTema(tema);
+        Optional<List<Resposta>> respostas = this.respostaRepository.findByTema(tema);
         Set<Resposta> respostasRandom = new HashSet<>();
         Random random = new Random();
 
-        if(!respostas.isEmpty() && respostas.size() >= 4) {
+        if(respostas.isPresent() && respostas.get().size() >= 4) {
 
             if(perguntaOpt.isPresent()) {
                 respostasRandom.add(perguntaOpt.get().getResposta());
@@ -53,7 +53,7 @@ public class RespostaImp implements RespostaService {
             }
 
             while(respostasRandom.size() < 4) {
-                respostasRandom.add(respostas.get(random.nextInt(0, respostas.size())));
+                respostasRandom.add(respostas.get().get(random.nextInt(0, respostas.get().size())));
             }
 
             List<Resposta> respostasReturn = new ArrayList<>(respostasRandom);
