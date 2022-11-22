@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 import br.edu.ifpb.project.quiz.jogo.model.Pergunta;
 import br.edu.ifpb.project.quiz.jogo.model.Resposta;
@@ -14,6 +15,7 @@ import br.edu.ifpb.project.quiz.jogo.repository.PerguntaRepository;
 import br.edu.ifpb.project.quiz.jogo.repository.RespostaRepository;
 
 @SpringBootApplication
+@EnableCaching
 public class JogoApplication implements CommandLineRunner {
 
 	// TODO - IMPLEMENTAÇÃO DE INSERTS DEFAULT PARA A APLICAÇÃO

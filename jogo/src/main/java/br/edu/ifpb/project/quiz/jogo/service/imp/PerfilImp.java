@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.project.quiz.jogo.model.Perfil;
@@ -28,6 +31,13 @@ public class PerfilImp implements PerfilService {
         );
     }
 
+    @Caching(
+        evict = {
+            @CacheEvict(
+                cacheNames = "Perfil", allEntries = true
+            )
+        }
+    )
     @Override
     public Perfil updatePerfil(PerfilDTO perfil) {
         Optional<Perfil> perfilOpt = this.perfilRepository.findById(perfil.getId());
@@ -35,14 +45,10 @@ public class PerfilImp implements PerfilService {
         if(perfilOpt.isPresent()) {
             Perfil perfilObj = perfilOpt.get();
 
-            return this.perfilRepository.save(
-                Perfil.builder()
-                      .id(perfilObj.getId())
-                      .apelido(perfilObj.getApelido())
-                      .bio(perfilObj.getBio())
-                      .email(perfilObj.getEmail())
-                      .build()
-            );
+            perfilObj.setApelido(perfil.getApelido());
+            perfilObj.setBio(perfil.getBio());
+
+            return this.perfilRepository.save(perfilObj);
         }
         else {
             return null;
@@ -55,6 +61,9 @@ public class PerfilImp implements PerfilService {
         return perfilOpt.isPresent();
     }
 
+    @Cacheable(
+        cacheNames = "Perfil", key = "#email"
+    )
     @Override
     public List<Perfil> findByEmail(String email) {
         Optional<List<Perfil>> perfilOpt = this.perfilRepository.findByEmail(email);
