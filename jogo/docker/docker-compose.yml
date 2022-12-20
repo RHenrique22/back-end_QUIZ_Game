@@ -33,6 +33,15 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+  
+  redis:
+    container_name: redis_container
+    hostname: redis
+    image: redis
+    volumes: 
+      - redis-data:/data
+    ports:
+      - "6379:6379"
 
 networks:
   postgres:
@@ -41,3 +50,4 @@ volumes:
   postgres-data:
   rabbitmq-data:
   rabbitmq-data-setup:
+  redis-data:

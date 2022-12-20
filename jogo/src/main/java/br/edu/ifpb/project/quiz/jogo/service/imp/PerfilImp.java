@@ -66,6 +66,7 @@ public class PerfilImp implements PerfilService {
     )
     @Override
     public List<Perfil> findByEmail(String email) {
+
         Optional<List<Perfil>> perfilOpt = this.perfilRepository.findByEmail(email);
 
         if(perfilOpt.isPresent()) {
